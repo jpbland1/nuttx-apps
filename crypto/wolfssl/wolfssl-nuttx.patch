@@ -1,0 +1,31 @@
+diff --git a/wolfcrypt/test/test.c b/wolfcrypt/test/test.c
+index 4a670f391..40dd4f56a 100644
+--- a/wolfcrypt/test/test.c
++++ b/wolfcrypt/test/test.c
+@@ -573,7 +573,7 @@ WOLFSSL_TEST_SUBROUTINE int logging_test(void);
+ #if !defined(NO_ASN) && !defined(NO_ASN_TIME)
+ WOLFSSL_TEST_SUBROUTINE int time_test(void);
+ #endif
+-WOLFSSL_TEST_SUBROUTINE int mutex_test(void);
++WOLFSSL_TEST_SUBROUTINE int wolfcrypt_mutex_test(void);
+ #if defined(USE_WOLFSSL_MEMORY) && !defined(FREERTOS)
+ WOLFSSL_TEST_SUBROUTINE int memcb_test(void);
+ #endif
+@@ -1463,7 +1463,7 @@ options: [-s max_relative_stack_bytes] [-m max_relative_heap_memory_bytes]\n\
+         TEST_PASS("time test passed!\n");
+ #endif
+ 
+-    if ( (ret = mutex_test()) != 0)
++    if ( (ret = wolfcrypt_mutex_test()) != 0)
+         return err_sys("mutex    test failed!\n", ret);
+     else
+         TEST_PASS("mutex    test passed!\n");
+@@ -42500,7 +42500,7 @@ WOLFSSL_TEST_SUBROUTINE int logging_test(void)
+ }
+ 
+ 
+-WOLFSSL_TEST_SUBROUTINE int mutex_test(void)
++WOLFSSL_TEST_SUBROUTINE int wolfcrypt_mutex_test(void)
+ {
+ #ifdef WOLFSSL_PTHREADS
+     wolfSSL_Mutex m;

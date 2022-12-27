@@ -1,0 +1,80 @@
+#
+# For a description of the syntax of this configuration file,
+# see the file kconfig-language.txt in the NuttX tools repository.
+#
+
+menuconfig CRYPTO_WOLFSSL
+	bool "wolfSSL SSL/TLS Cryptography Library"
+	default n
+	---help---
+		Enable support for wolfSSL
+
+if CRYPTO_WOLFSSL
+
+config WOLFSSL_VERSION
+	string "wolfSSL Version"
+	default "5.5.4"
+
+menuconfig WOLFSSL_APPS
+	tristate "wolfSSL applications"
+	default n
+	---help---
+		Enable wolfSSL applications
+
+if WOLFSSL_APPS
+
+config WOLFSSL_DEFAULT_TASK_STACKSIZE
+	int "wolfSSL app default stack size"
+	default 16384
+
+config WOLFSSL_APP_BENCHMARK
+	bool "wolfCrypt Benchmark application"
+	default n
+	---help---
+		Enable the wolfCrypt benchmark application
+
+if WOLFSSL_APP_BENCHMARK
+
+config WOLFSSL_APP_BENCHMARK_PROGNAME
+	string "Program name"
+	default "wolfcrypt_benchmark"
+	---help---
+		This is the name of the program that will be used when the NSH ELF
+		program is installed.
+
+config WOLFSSL_APP_BENCHMARK_PRIORITY
+	int "wolfcrypt benchmark task priority"
+	default 100
+
+config WOLFSSL_APP_BENCHMARK_STACKSIZE
+	int "wolfcrypt benchmark stack size"
+	default WOLFSSL_DEFAULT_TASK_STACKSIZE
+endif
+
+config WOLFSSL_APP_SELFTEST
+	bool "wolfCrypt Self Test application"
+	default n
+	---help---
+		Enable the wolfCrypt self-test app
+
+if WOLFSSL_APP_SELFTEST
+
+config WOLFSSL_APP_SELFTEST_PROGNAME
+	string "Program name"
+	default "wolfcrypt_test"
+	---help---
+		This is the name of the program that will be used when the NSH ELF
+		program is installed.
+
+config WOLFSSL_APP_SELFTEST_PRIORITY
+	int "wolfcrypt self-test task priority"
+	default 100
+
+config WOLFSSL_APP_SELFTEST_STACKSIZE
+	int "wolfcrypt self-test stack size"
+	default WOLFSSL_DEFAULT_TASK_STACKSIZE
+endif
+
+endif
+
+endif # CRYPTO_WOLFSSL
