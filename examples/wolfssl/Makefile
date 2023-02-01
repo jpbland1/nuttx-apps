@@ -1,5 +1,5 @@
 ############################################################################
-# apps/examples/tcpecho/Make.defs
+# apps/examples/tcpecho/Makefile
 #
 # Licensed to the Apache Software Foundation (ASF) under one or more
 # contributor license agreements.  See the NOTICE file distributed with
@@ -18,13 +18,42 @@
 #
 ############################################################################
 
-ifneq ($(CONFIG_EXAMPLES_WOLFSSL),)
-ifneq ($(CONFIG_CRYPTO_WOLFSSL),)
-CONFIGURED_APPS += $(APPDIR)/examples/wolfssl_examples
+include $(APPDIR)/Make.defs
 
-CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/crypto/wolfssl # To reach user_settings.h
-CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/crypto/wolfssl/wolfssl
-CXXFLAGS += ${INCDIR_PREFIX}$(APPDIR)/crypto/wolfssl # To reach user_settings.h
-CXXFLAGS += ${INCDIR_PREFIX}$(APPDIR)/crypto/wolfssl/wolfssl
+CFLAGS += -DWOLFSSL_USER_SETTINGS
+
+# Discover built-in application info
+ifeq ($(CONFIG_EXAMPLES_WOLFSSL_CLIENT_SERVER),y)
+
+PROGNAME  += wolfssl_server_client
+PRIORITY  += 100
+STACKSIZE += 16384
+MODULE += $(CONFIG_EXAMPLES_WOLFSSL)
+
+MAINSRC += wolfssl-examples/embedded/tls-client-server.c
+
 endif
+
+ifeq ($(CONFIG_EXAMPLES_WOLFSSL_CLIENT),y)
+
+PROGNAME  += wolfssl_client
+PRIORITY  += 100
+STACKSIZE += 16384
+MODULE += $(CONFIG_EXAMPLES_WOLFSSL)
+
+MAINSRC += wolfssl-examples/embedded/tls-sock-client.c
+
 endif
+
+ifeq ($(CONFIG_EXAMPLES_WOLFSSL_SERVER),y)
+
+PROGNAME  += wolfssl_client
+PRIORITY  += 100
+STACKSIZE += 16384
+MODULE += $(CONFIG_EXAMPLES_WOLFSSL)
+
+MAINSRC += wolfssl-examples/embedded/tls-sock-server.c
+
+endif
+
+include $(APPDIR)/Application.mk

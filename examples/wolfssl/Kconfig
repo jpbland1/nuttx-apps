@@ -1,0 +1,61 @@
+#
+# For a description of the syntax of this configuration file,
+# see the file kconfig-language.txt in the NuttX tools repository.
+#
+
+if CRYPTO_WOLFSSL
+
+menuconfig EXAMPLES_WOLFSSL
+	tristate "WolfSSL example applications"
+	default n
+	---help---
+		WolfSSL TLS example applications
+
+if EXAMPLES_WOLFSSL
+
+config EXAMPLES_WOLFSSL_CLIENT_SERVER
+	bool "WolfSSL client and server example"
+	default n
+	---help---
+		runs both a tls client and server in the same task that connect to one
+		another, requires local loopback
+
+#config EXAMPLES_WOLFSSL_CLIENT
+	#bool "WolfSSL client example"
+	#default n
+	#---help---
+		#runs a wolfssl client that connects to the external server found in
+		#/wolfssl-examples/embedded/tls-sock-server.c which can be run from any
+		#computer
+
+#if EXAMPLES_WOLFSSL_CLIENT
+
+#config EXAMPLES_WOLFSSL_CLIENT_SERVER_ADDR
+	#hex "WolfSSL client example server address"
+	#default 0
+
+#config EXAMPLES_WOLFSSL_CLIENT_SERVER_PORT
+	#hex "WolfSSL client example server port"
+	#default 0
+
+#endif
+
+#config EXAMPLES_WOLFSSL_SERVER
+	#bool "WolfSSL client example"
+	#default n
+	#---help---
+		#runs a wolfssl server that an external client can connect to, found in
+		#/wolfssl-examples/embedded/tls-sock-client.c which can be run from any
+		#computer
+
+#if EXAMPLES_WOLFSSL_CLIENT
+
+#config EXAMPLES_WOLFSSL_SERVER_PORT
+	#hex "WolfSSL client example server port"
+	#default 0
+
+#endif
+
+endif
+
+endif

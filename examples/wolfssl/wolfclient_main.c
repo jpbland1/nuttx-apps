@@ -1,6 +1,6 @@
-#include "/home/john/Documents/nuttxspace/apps/crypto/wolfssl/user_settings.h"
-#include "/home/john/Documents/nuttxspace/apps/crypto/wolfssl/wolfssl/wolfssl/ssl.h"
-#include "/home/john/Documents/nuttxspace/apps/crypto/wolfssl/wolfssl/wolfssl/test.h"
+#include <user_settings.h>
+#include <wolfssl/ssl.h>
+#include <wolfssl/test.h>
 #include <errno.h>
 #define SERV_PORT 443
 
@@ -127,14 +127,18 @@ int main()
     memset(&servAddr, 0, sizeof(servAddr));
     servAddr.sin_family = AF_INET;
     servAddr.sin_port = htons(SERV_PORT);
-    servAddr.sin_addr.s_addr = inet_addr("151.101.2.137");
+    servAddr.sin_addr.s_addr = inet_addr("151.101.130.137");
 
         /* connect to socket */
-    connect(sockfd, (struct sockaddr *) &servAddr, sizeof(servAddr));
+    if((ret = connect(sockfd, (struct sockaddr *) &servAddr, sizeof(servAddr))) != 0){
+        printf("connect error %d\n", ret);
+        return ret;
+    }
 
         /* initialize wolfssl library */
     wolfSSL_Init();
-    method = wolfTLSv1_2_client_method(); /* use TLS v1.2 */
+    method = wolfTLSv1_3_client_method(); /* use TLS v1.3 */
+    //method = wolfTLSv1_2_client_method(); /* use TLS v1.2 */
 
         /* make new ssl context */
     if ( (ctx = wolfSSL_CTX_new(method)) == NULL) {
@@ -176,7 +180,10 @@ int main()
         return ret;
     }
 
-    /* wolfSSL_Debugging_ON(); */
+    /*
+    wolfSSL_Debugging_ON();
+    */
+
     if ((ret = wolfSSL_connect(ssl)) != SSL_SUCCESS) {
         printf("wolfSSL_connect error %d\n", ret);
         return ret;

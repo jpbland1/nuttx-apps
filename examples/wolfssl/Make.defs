@@ -1,5 +1,5 @@
 ############################################################################
-# apps/examples/tcpecho/Makefile
+# apps/examples/tcpecho/Make.defs
 #
 # Licensed to the Apache Software Foundation (ASF) under one or more
 # contributor license agreements.  See the NOTICE file distributed with
@@ -18,15 +18,13 @@
 #
 ############################################################################
 
-include $(APPDIR)/Make.defs
+ifneq ($(CONFIG_CRYPTO_WOLFSSL),)
+ifneq ($(CONFIG_EXAMPLES_WOLFSSL),)
+CONFIGURED_APPS += $(APPDIR)/examples/wolfssl
 
-# Discover built-in application info
-
-PROGNAME += wolfssl_client
-PRIORITY += SCHED_PRIORITY_DEFAULT
-STACKSIZE += 16384
-MODULE += $(CONFIG_EXAMPLES_WOLFSSL)
-
-MAINSRC = wolfclient_main.c
-
-include $(APPDIR)/Application.mk
+CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/crypto/wolfssl # To reach user_settings.h
+CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/crypto/wolfssl/wolfssl
+CXXFLAGS += ${INCDIR_PREFIX}$(APPDIR)/crypto/wolfssl # To reach user_settings.h
+CXXFLAGS += ${INCDIR_PREFIX}$(APPDIR)/crypto/wolfssl/wolfssl
+endif
+endif
