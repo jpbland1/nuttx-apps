@@ -1,7 +1,7 @@
 #include <nuttx/config.h>
 
 /* Library */
-#define WOLFCRYPT_ONLY
+//#define WOLFCRYPT_ONLY
 #define SINGLE_THREADED
 #define WOLFSSL_SMALL_STACK
 
@@ -44,3 +44,17 @@
 
 /* Development */
 //#define DEBUG_WOLFSSL
+
+/* WIP */
+//#define WOLFSSL_STM32H7
+#define HAVE_TLS_EXTENSIONS
+#define HAVE_SUPPORTED_CURVES
+#define HAVE_ENCRYPT_THEN_MAC
+#define HAVE_EXTENDED_MASTER
+#define WOLFSSL_TLS13
+#define HAVE_HKDF
+#define HAVE_DH
+#define HAVE_FFDHE_2048
+#define HAVE_DH_DEFAULT_PARAMS
+#define WC_RSA_PSS
+#define HAVE_AEAD

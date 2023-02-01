@@ -1,0 +1,10 @@
+#
+# For a description of the syntax of this configuration file,
+# see the file kconfig-language.txt in the NuttX tools repository.
+#
+
+config EXAMPLES_WOLFSSL
+	tristate "Simple wolfSSL client"
+	default n
+	---help---
+		Simple wolfSSL client that connects with TLS1.3 to a public server
